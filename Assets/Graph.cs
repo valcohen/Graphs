@@ -18,43 +18,27 @@ public class Graph : MonoBehaviour {
     void Awake() {
         float step          = 2f / resolution;   // 2f to limit values within -1, 1 domain
         Vector3 scale       = Vector3.one * step;
-        Vector3 position    = new Vector3();
         points              = new Transform[resolution * resolution];
 
-        for (int i = 0, z = 0; z  < resolution; z++) {
-            position.z = (z + 0.5f) * step - 1f;
-            for (int x = 0; x < resolution; x++, i++) {
-                Transform point = Instantiate (pointPrefab);
-
-                position.x = (x + 0.5f) * step - 1f;
-
-                point.localPosition = position;
-                point.localScale = scale;
-                point.SetParent (transform, false);
-                points [i] = point;
-            }
-        }
-        /*
         for (int i = 0; i < points.Length; i++) {
             Transform point = Instantiate (pointPrefab);
             point.localScale = scale;
             point.SetParent (transform, false);
             points [i] = point;
         }
-        */
     }
 
     void Update() {
         float t = Time.time;
         GraphFunction f = functions [(int)function];
+        float step = 2f / resolution;
+        for (int z = 0, i = 0; z < resolution; z++) {
+            float v = (z + 0.5f) * step - 1f;
+            for (int x = 0; x < resolution; x++, i++) {
+                float u = (x + 0.5f) * step - 1f;
 
-        for (int i = 0; i < points.Length; i++) {
-            Transform point = points [i];
-            Vector3 position = point.localPosition;
-
-            position = f (position.x, position.z, t);
-
-            point.localPosition = position;
+                points [i].localPosition = f (u, v, t);
+            }
         }
     }
 
