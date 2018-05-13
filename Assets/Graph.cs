@@ -12,7 +12,8 @@ public class Graph : MonoBehaviour {
     Transform[] points;
 
     static GraphFunction[] functions = {
-        SineFunction, Sine2DFunction, MultiSineFunction, MultiSine2DFunction, Ripple
+        SineFunction, Sine2DFunction, MultiSineFunction, MultiSine2DFunction, Ripple,
+        Cylinder, Sphere, PulsingSphere
     };
 
     void Awake() {
@@ -105,6 +106,42 @@ public class Graph : MonoBehaviour {
         p.y = Mathf.Sin(pi * (4f * d - t));
         p.y /= 1f + 10f * d;
         p.z = z;
+
+        return p;
+    }
+
+    static Vector3 Cylinder (float u, float v, float t) {
+        Vector3 p;
+        // float r = 1f + Mathf.Sin(6f * pi * u) * 0.2f;    // wobbly star cylinder
+        // float r = 1f + Mathf.Sin(2f * pi * v) * 0.2f;    // sine vase shape
+        float r = 0.8f + Mathf.Sin(pi * (6f * u + 2f * v + t)) * 0.2f;  // animated twisting wobbly star cylinder
+        p.x = r * Mathf.Sin(pi * u);
+        p.y = v;
+        p.z = r * Mathf.Cos(pi * u);
+        return p;
+    }
+
+    static Vector3 Sphere (float u, float v, float t) {
+        Vector3 p;
+        float r = Mathf.Cos (pi * 0.1f * v);
+        float s = r * Mathf.Cos (pi * 0.5f * v);
+
+        p.x = s * Mathf.Sin(pi * u);
+        p.y = r * Mathf.Sin(pi * 0.5f * v);
+        p.z = s * Mathf.Cos(pi * u);
+
+        return p;
+    }
+
+    static Vector3 PulsingSphere (float u, float v, float t) {
+        Vector3 p;
+        float r = 0.8f + Mathf.Sin(pi * (6f * u + t)) * 0.1f;
+        r += Mathf.Sin (pi * (4f * v + t)) * 0.1f;
+        float s = r * Mathf.Cos (pi * 0.5f * v);
+
+        p.x = s * Mathf.Sin(pi * u);
+        p.y = r * Mathf.Sin(pi * 0.5f * v);
+        p.z = s * Mathf.Cos(pi * u);
 
         return p;
     }
