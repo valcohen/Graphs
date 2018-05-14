@@ -13,7 +13,7 @@ public class Graph : MonoBehaviour {
 
     static GraphFunction[] functions = {
         SineFunction, Sine2DFunction, MultiSineFunction, MultiSine2DFunction, Ripple,
-        Cylinder, Sphere, PulsingSphere
+        Cylinder, Sphere, PulsingSphere, Torus, PulsingTorus
     };
 
     void Awake() {
@@ -142,6 +142,32 @@ public class Graph : MonoBehaviour {
         p.x = s * Mathf.Sin(pi * u);
         p.y = r * Mathf.Sin(pi * 0.5f * v);
         p.z = s * Mathf.Cos(pi * u);
+
+        return p;
+    }
+
+    static Vector3 Torus (float u, float v, float t) {
+        Vector3 p;
+        float r1 = 1f;      // major radius.
+        float r2 = 0.5f;    // minor radius. 0.5 = outer ring only
+        float s  = r2 * Mathf.Cos (pi * v) + r1;
+
+        p.x = s  * Mathf.Sin (pi * u);
+        p.y = r2 * Mathf.Sin (pi * v);
+        p.z = s  * Mathf.Cos (pi * u);
+
+        return p;
+    }
+
+    static Vector3 PulsingTorus (float u, float v, float t) {
+        Vector3 p;
+        float r1 = 0.65f + Mathf.Sin (pi * (6f * u + t)) * 0.1f;
+        float r2 = 0.20f + Mathf.Sin (pi * (4f * v + t)) * 0.05f;
+        float s  = r2 * Mathf.Cos (pi * v) + r1;
+
+        p.x = s  * Mathf.Sin (pi * u);
+        p.y = r2 * Mathf.Sin (pi * v);
+        p.z = s  * Mathf.Cos (pi * u);
 
         return p;
     }

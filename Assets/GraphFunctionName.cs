@@ -6,5 +6,7 @@
     Ripple,
     Cylinder,
     Sphere,
-    PulsingSphere
+    PulsingSphere,
+    Torus,
+    PulsingTorus
 }
