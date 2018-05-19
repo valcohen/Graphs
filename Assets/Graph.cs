@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// http://catlikecoding.com/unity/tutorials/basics/building-a-graph/
+/// </summary>
 public class Graph : MonoBehaviour {
 
     public Transform pointPrefab;
@@ -13,7 +16,7 @@ public class Graph : MonoBehaviour {
 
     static GraphFunction[] functions = {
         SineFunction, Sine2DFunction, MultiSineFunction, MultiSine2DFunction, Ripple,
-        Cylinder, Sphere, PulsingSphere, Torus, PulsingTorus
+        Cylinder, Sphere, PulsingSphere, Torus, PulsingTorus, Manta, DoubleManta
     };
 
     void Awake() {
@@ -171,4 +174,28 @@ public class Graph : MonoBehaviour {
 
         return p;
     }
+
+    static Vector3 Manta (float u, float v, float t) {
+        Vector3 p;
+        float scaledTime = 1.0f * t;
+        p.x = u;
+        p.y = Mathf.Sin( scaledTime + u + v );
+        p.y *= 0.5f;
+        p.z = v;
+
+        return p;
+    }
+
+    static Vector3 DoubleManta (float u, float v, float t) {
+        Vector3 p;
+        float scaledTime = 1.0f * t;
+        p.x = u;
+        p.y = Mathf.Sin( scaledTime + u * v );
+        p.y *= 0.5f;
+        p.z = v;
+
+        return p;
+    }
+
+
 }

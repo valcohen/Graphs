@@ -8,5 +8,7 @@
     Sphere,
     PulsingSphere,
     Torus,
-    PulsingTorus
+    PulsingTorus,
+    Manta,
+    DoubleManta
 }
